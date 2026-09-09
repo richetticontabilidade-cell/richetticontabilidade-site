@@ -1,0 +1,25 @@
+# ── Não versionar: arquivos que não vão para o site ──────
+
+# Pasta de staging para Netlify Drop (o deploy via git usa a raiz)
+dist/
+
+# Projeto auxiliar / template
+my-project/
+
+# Arquivos internos do OpenWork
+.opencode/
+opencode.jsonc
+
+# Arquivos de referência do cliente (não publicar)
+Arquivos/
+
+# Logo original redundante (a otimizada está em img/logo.png)
+imglogo.png
+
+# Configurações locais não usadas pelo site
+package.json
+package-lock.json
+
+# Sistema
+Thumbs.db
+Desktop.ini

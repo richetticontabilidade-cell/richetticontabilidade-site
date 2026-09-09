@@ -1,0 +1,5 @@
+# Richetti Contabilidade — robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://richetticontabilidade.com.br/sitemap.xml

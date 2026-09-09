@@ -1,0 +1,68 @@
+# ══════════════════════════════════════════════════════════
+#  Richetti Contabilidade — Security Headers (Apache)
+#  Arquivo: .htaccess — colocar na raiz do site
+# ══════════════════════════════════════════════════════════
+
+# ── Força HTTPS ───────────────────────────────────────────
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Security Headers ─────────────────────────────────────
+<IfModule mod_headers.c>
+
+    # 1. HSTS — força HTTPS por 1 ano
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # 2. Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests;"
+
+    # 3. Anti-Clickjacking
+    Header always set X-Frame-Options "DENY"
+
+    # 4. Bloqueia MIME sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # 5. Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 6. Permissions Policy
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=(), interest-cohort=()"
+
+    # 7. XSS Protection (legado)
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # 8. Remove header que expõe versão do servidor
+    Header unset X-Powered-By
+    Header unset Server
+
+</IfModule>
+
+# ── Cache de arquivos estáticos ───────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png             "access plus 30 days"
+    ExpiresByType image/jpeg            "access plus 30 days"
+    ExpiresByType image/gif             "access plus 30 days"
+    ExpiresByType image/svg+xml         "access plus 30 days"
+    ExpiresByType text/css              "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType font/woff2            "access plus 30 days"
+</IfModule>
+
+# ── Bloqueia arquivos sensíveis ───────────────────────────
+<FilesMatch "(\.env|\.git|\.htpasswd|composer\.json|package\.json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Limita tamanho de requisição (anti-DoS) ───────────────
+LimitRequestBody 2097152
+
+# ── Desativa listagem de diretórios ───────────────────────
+Options -Indexes
+
+# ── Compressão Gzip ───────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>

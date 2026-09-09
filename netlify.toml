@@ -1,0 +1,33 @@
+# ══════════════════════════════════════════════════════════
+#  Richetti Contabilidade — Configuração Netlify
+#  Usado em deploys via CLI (netlify deploy) ou Git (GitHub)
+#  Para Netlify Drop: arraste a pasta dist/ no app.netlify.com/drop
+# ══════════════════════════════════════════════════════════
+
+[build]
+  publish = "."
+
+# ── Headers de segurança e cache ──────────────────────────
+# (também definidos no arquivo _headers, que funciona nos dois casos)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests;"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# ── Redirecionamento www → domínio principal ──────────────
+# Ative se usar www.richetticontabilidade.com.br
+# [[redirects]]
+#   from = "https://www.richetticontabilidade.com.br/*"
+#   to = "https://richetticontabilidade.com.br/:splat"
+#   status = 301
