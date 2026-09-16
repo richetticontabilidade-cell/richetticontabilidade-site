@@ -588,6 +588,17 @@
                         <li><a href="#servicos" class="text-white/70 hover:text-white transition">Abertura de Empresa</a></li>
                     </ul>
                 </div>
+
+                <!-- Documentos -->
+                <div>
+                    <h4 class="font-display text-lg font-bold mb-6">Documentos</h4>
+                    <ul class="space-y-3">
+                        <li><a href="politicas/sla.html" class="text-white/70 hover:text-white transition">SLA</a></li>
+                        <li><a href="politicas/politica-de-privacidade.html" class="text-white/70 hover:text-white transition">Política de Privacidade</a></li>
+                        <li><a href="politicas/politica-de-cookies.html" class="text-white/70 hover:text-white transition">Política de Cookies</a></li>
+                        <li><a href="politicas/termos-de-uso.html" class="text-white/70 hover:text-white transition">Termos de Uso</a></li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Linha divisória e Copyright -->
@@ -596,7 +607,10 @@
                     2026 Richetti Contabilidade. Todos os direitos reservados.
                 </p>
                 <div class="flex gap-6 text-sm">
-                    <a href="#" id="footer-policy-link" class="text-white/50 hover:text-white transition">Política de Privacidade</a>
+                    <a href="politicas/sla.html" class="text-white/50 hover:text-white transition">SLA</a>
+                    <a href="politicas/politica-de-privacidade.html" class="text-white/50 hover:text-white transition">Política de Privacidade</a>
+                    <a href="politicas/politica-de-cookies.html" class="text-white/50 hover:text-white transition">Política de Cookies</a>
+                    <a href="politicas/termos-de-uso.html" class="text-white/50 hover:text-white transition">Termos de Uso</a>
                 </div>
             </div>
         </div>
@@ -816,7 +830,7 @@
                 </p>
                 <p style="margin:0;font-size:0.85rem;color:#4b5563;line-height:1.5">
                     Utilizamos cookies para melhorar a sua experiência em nosso site. Ao continuar navegando você concorda com a nossa 
-                    <a href="#" id="cookie-policy-link" style="color:#7a5c3e;text-decoration:underline">Política de Privacidade</a>.
+                    <a href="politicas/politica-de-cookies.html" id="cookie-policy-link" style="color:#7a5c3e;text-decoration:underline">Política de Cookies</a>.
                 </p>
             </div>
             <!-- Botões -->
@@ -901,17 +915,6 @@
                 localStorage.setItem('lgpd_consent', 'essential');
                 banner.style.display = 'none';
             });
-            document.getElementById('cookie-policy-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                modal.style.display = 'flex';
-            });
-            var footerPolicy = document.getElementById('footer-policy-link');
-            if (footerPolicy) {
-                footerPolicy.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    modal.style.display = 'flex';
-                });
-            }
             document.getElementById('cookie-modal-close').addEventListener('click', function() {
                 modal.style.display = 'none';
             });
