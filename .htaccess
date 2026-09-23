@@ -29,8 +29,9 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     # 6. Permissions Policy
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=(), interest-cohort=()"
 
-    # 7. XSS Protection (legado)
-    Header always set X-XSS-Protection "1; mode=block"
+    # 7. XSS Protection — desativado (0) conforme recomendação moderna;
+    #    o auditor legado do IE tinha próprias vulnerabilidades de bypass
+    Header always set X-XSS-Protection "0"
 
     # 8. Remove header que expõe versão do servidor
     Header unset X-Powered-By
