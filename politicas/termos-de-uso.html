@@ -95,15 +95,15 @@
       .wa-btn:hover{transform:scale(1.1)}
       .wa-btn svg{width:34px;height:34px;fill:white}
       @media(max-width:768px){.wa-btn{bottom:70px;right:15px;width:58px;height:58px}.wa-btn svg{width:30px;height:30px}}
-      .mobile-nav{transform:translateX(100%);transition:transform .3s}
-      .mobile-nav.open{transform:translateX(0)}
+      .mobile-nav{transform:translateX(100%);transition:transform .3s,visibility .3s;visibility:hidden}
+      .mobile-nav.open{transform:translateX(0);visibility:visible}
       .reveal{opacity:0;transform:translateY(20px);transition:all .6s}
       .reveal.show{opacity:1;transform:translateY(0)}
       .btn-primary{background:linear-gradient(135deg,#1e3a5f,#0f2744);color:white;padding:12px 24px;border-radius:12px;font-weight:600;display:inline-block;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
       .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(30,58,95,.3)}
-      html{scroll-behavior:smooth;overflow-x:hidden}
+      html{scroll-behavior:smooth;scroll-padding-top:80px;scrollbar-gutter:stable;overflow-x:clip}
       section[id]{scroll-margin-top:80px}
-      body{overflow-x:hidden}
+      body{overflow-x:clip;overscroll-behavior-x:none}
     </style>
 </head>
 <body class="bg-[#faf8f5] text-[#1e3a5f]">

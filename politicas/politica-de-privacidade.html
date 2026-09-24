@@ -140,8 +140,8 @@
           .wa-btn { bottom: 70px; right: 15px; width: 58px; height: 58px; }
           .wa-btn svg { width: 30px; height: 30px; }
       }
-      .mobile-nav { transform: translateX(100%); transition: transform 0.3s; }
-      .mobile-nav.open { transform: translateX(0); }
+      .mobile-nav { transform: translateX(100%); transition: transform 0.3s, visibility 0.3s; visibility: hidden; }
+      .mobile-nav.open { transform: translateX(0); visibility: visible; }
       .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s; }
       .reveal.show { opacity: 1; transform: translateY(0); }
       .form-input {
@@ -169,9 +169,9 @@
           cursor: pointer;
       }
       .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30,58,95,0.3); }
-      html { scroll-behavior: smooth; overflow-x: hidden; }
+      html { scroll-behavior: smooth; scroll-padding-top: 80px; scrollbar-gutter: stable; overflow-x: clip; }
       section[id] { scroll-margin-top: 80px; }
-      body { overflow-x: hidden; }
+      body { overflow-x: clip; overscroll-behavior-x: none; }
       @supports (min-height: 100svh) { .min-h-screen { min-height: 100svh; } }
       @media (max-width: 480px) {
           .stats-grid { gap: 1rem; }

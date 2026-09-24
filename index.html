@@ -200,8 +200,8 @@
             .wa-btn svg { width: 30px; height: 30px; }
         }
         
-        .mobile-nav { transform: translateX(100%); transition: transform 0.3s; }
-        .mobile-nav.open { transform: translateX(0); }
+        .mobile-nav { transform: translateX(100%); transition: transform 0.3s, visibility 0.3s; visibility: hidden; }
+        .mobile-nav.open { transform: translateX(0); visibility: visible; }
         
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s; }
         .reveal.show { opacity: 1; transform: translateY(0); }
@@ -220,10 +220,15 @@
         .msg.ok { display: block; background: #d1fae5; color: #065f46; }
         .msg.err { display: block; background: #fee2e2; color: #991b1b; }
         
-        /* ── Melhorias responsivas e de performance ── */
-        html { scroll-behavior: smooth; overflow-x: hidden; }
+        /* ── Melhorias responsivas, zoom e rolagem ── */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+            scrollbar-gutter: stable;
+            overflow-x: clip;
+        }
         section[id] { scroll-margin-top: 80px; }
-        body { overflow-x: hidden; }
+        body { overflow-x: clip; overscroll-behavior-x: none; }
         @supports (min-height: 100svh) { .min-h-screen { min-height: 100svh; } }
         @media (max-width: 480px) {
             .stats-grid { gap: 1rem; }
@@ -387,10 +392,10 @@
                 <div class="reveal">
                     <div class="text-[#7a5c3e] font-semibold uppercase text-sm mb-2">Sobre Nós</div>
                     <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Histórias de sucesso há mais de uma década</h2>
-                    <p class="text-gray-600 mb-4" style="text-align:justify">A <strong class="text-[#1e3a5f]">Richetti Contabilidade</strong> oferece serviços de excelência para pessoas físicas e jurídicas, combinando tradição e tecnologia.</p>
-                    <p class="text-gray-600 mb-4" style="text-align:justify">Nosso foco é a prestação de serviço com qualidade e eficiência, nosso atendimento é rápido e assertivo. Somos especialistas na área tributária, buscamos sempre o melhor enquadramento tributário para nossos clientes, com objetivo de reduzir os impostos.</p>
-                    <p class="text-gray-600 mb-6" style="text-align:justify">Acreditamos que uma contabilidade bem feita é a base para decisões estratégicas assertivas. Por isso, vamos além dos números, somos parceiros no crescimento do seu negócio.</p>
-                    <p class="text-gray-600 mb-6" style="text-align:justify">Responsável técnica: <strong class="text-[#1e3a5f]">Daniele Luiza Richetti Borges</strong> — CRC RS-097012/O-5.</p>
+                    <p class="text-gray-600 mb-4" style="text-align:left">A <strong class="text-[#1e3a5f]">Richetti Contabilidade</strong> oferece serviços de excelência para pessoas físicas e jurídicas, combinando tradição e tecnologia.</p>
+                    <p class="text-gray-600 mb-4" style="text-align:left">Nosso foco é a prestação de serviço com qualidade e eficiência, nosso atendimento é rápido e assertivo. Somos especialistas na área tributária, buscamos sempre o melhor enquadramento tributário para nossos clientes, com objetivo de reduzir os impostos.</p>
+                    <p class="text-gray-600 mb-6" style="text-align:left">Acreditamos que uma contabilidade bem feita é a base para decisões estratégicas assertivas. Por isso, vamos além dos números, somos parceiros no crescimento do seu negócio.</p>
+                    <p class="text-gray-600 mb-6" style="text-align:left">Responsável técnica: <strong class="text-[#1e3a5f]">Daniele Luiza Richetti Borges</strong> — CRC RS-097012/O-5.</p>
                     <div class="grid grid-cols-2 gap-4 mb-8">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-[#7a5c3e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
@@ -779,9 +784,18 @@
                     var t = document.querySelector(h);
                     if (t) {
                         e.preventDefault();
-                        window.scrollTo({top: t.offsetTop - 80, behavior: 'smooth'});
+                        var top = t.getBoundingClientRect().top + window.pageYOffset - 80;
+                        window.scrollTo({top: Math.max(0, top), behavior: 'smooth'});
                     }
                 }
+            });
+        });
+
+        // Reavalia .reveal ao redimensionar/zoom para não deixar buracos
+        window.addEventListener('resize', function() {
+            reveals.forEach(function(el) {
+                var rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('show');
             });
         });
 
