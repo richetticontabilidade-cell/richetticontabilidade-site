@@ -39,18 +39,19 @@
       .h-5{height:1.25rem}.h-6{height:1.5rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-20{height:5rem}.h-24{height:6rem}
       .max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}
       .mx-auto{margin-left:auto;margin-right:auto}
-      .mt-12{margin-top:3rem}
-      .mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}
+      .mt-4{margin-top:1rem}.mt-12{margin-top:3rem}
+      .mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}
       .pt-8{padding-top:2rem}.pt-20{padding-top:5rem}.pt-28{padding-top:7rem}
       .pb-16{padding-bottom:4rem}
-      .py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-20{padding-top:5rem;padding-bottom:5rem}
-      .px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}
+      .py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-20{padding-top:5rem;padding-bottom:5rem}
+      .px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}
       .p-2{padding:.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}
+      .overflow-y-auto{overflow-y:auto}
       .gap-8{gap:2rem}
       .flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
       .items-center{align-items:center}.items-start{align-items:flex-start}.items-end{align-items:flex-end}
       .justify-center{justify-content:center}.justify-between{justify-content:space-between}
-      .gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}
+      .gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}
       .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
       .space-y-3>*+*{margin-top:.75rem}.space-y-4>*+*{margin-top:1rem}.space-y-6>*+*{margin-top:1.5rem}
       .font-display{font-family:'Nunito',sans-serif}
@@ -128,8 +129,54 @@
           .wa-btn { bottom: 70px; right: 15px; width: 58px; height: 58px; }
           .wa-btn svg { width: 30px; height: 30px; }
       }
-      .mobile-nav { transform: translateX(100%); transition: transform 0.3s, visibility 0.3s; visibility: hidden; }
+      .mobile-nav {
+          transform: translateX(100%);
+          transition: transform 0.3s cubic-bezier(.4,0,.2,1), visibility 0.3s;
+          visibility: hidden;
+          width: min(20rem, 85vw);
+          background: #fff;
+          border-left: 1px solid #f3f4f6;
+          display: flex;
+          flex-direction: column;
+          box-shadow: -8px 0 32px rgba(15,39,68,.12);
+      }
       .mobile-nav.open { transform: translateX(0); visibility: visible; }
+      .mnu-overlay {
+          position: fixed;
+          inset: 0;
+          top: 5rem;
+          background: rgba(15,39,68,.45);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s, visibility 0.3s;
+          z-index: 35;
+      }
+      .mnu-overlay.open { opacity: 1; visibility: visible; }
+      .mnu-link {
+          display: block;
+          padding: 0.875rem 1rem;
+          border-radius: 0.75rem;
+          font-weight: 600;
+          color: #1e3a5f;
+          transition: background 0.2s, color 0.2s, transform 0.2s;
+      }
+      .mnu-link:hover, .mnu-link:focus-visible {
+          background: #f8f6f3;
+          color: #7a5c3e;
+          transform: translateX(4px);
+      }
+      #mnuBtn {
+          border-radius: 0.5rem;
+          color: #1e3a5f;
+          transition: background 0.2s, color 0.2s;
+      }
+      #mnuBtn:hover, #mnuBtn[aria-expanded="true"] {
+          background: #f8f6f3;
+          color: #7a5c3e;
+      }
+      #mnuBtn:focus-visible { outline: 2px solid #1e3a5f; outline-offset: 2px; }
       .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s; }
       .reveal.show { opacity: 1; transform: translateY(0); }
       .form-input {
@@ -185,19 +232,26 @@
                 <a href="../index.html#contato" class="hover:text-[#7a5c3e] transition">Contato</a>
                 <a href="../index.html#contato" class="btn-primary">Fale Conosco</a>
             </nav>
-            <button id="mnuBtn" class="md:hidden p-2" type="button">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button id="mnuBtn" class="md:hidden p-2" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mnu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path id="mnuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
         </div>
-        <div id="mnu" class="mobile-nav fixed top-20 right-0 bottom-0 w-64 bg-white shadow-2xl md:hidden z-40">
-            <nav class="p-6 flex flex-col gap-4">
-                <a href="../index.html#inicio" class="py-2 hover:text-[#7a5c3e]">Início</a>
-                <a href="../index.html#servicos" class="py-2 hover:text-[#7a5c3e]">Serviços</a>
-                <a href="../index.html#sobre" class="py-2 hover:text-[#7a5c3e]">Sobre</a>
-                <a href="../index.html#contato" class="py-2 hover:text-[#7a5c3e]">Contato</a>
+        <div id="mnuOverlay" class="mnu-overlay md:hidden" aria-hidden="true"></div>
+        <div id="mnu" class="mobile-nav fixed top-20 right-0 bottom-0 md:hidden z-40" role="dialog" aria-label="Menu de navegação">
+            <nav class="p-5 flex flex-col gap-1 flex-1 overflow-y-auto">
+                <span class="text-xs uppercase tracking-widest text-[#7a5c3e] font-semibold mb-2 px-3">Menu</span>
+                <a href="../index.html#inicio" class="mnu-link">Início</a>
+                <a href="../index.html#servicos" class="mnu-link">Serviços</a>
+                <a href="../index.html#sobre" class="mnu-link">Sobre</a>
+                <a href="../index.html#contato" class="mnu-link">Contato</a>
+                <a href="../index.html#contato" class="btn-primary mt-4 text-center">Fale Conosco</a>
             </nav>
+            <div class="px-5 py-4 border-t border-gray-100">
+                <p class="text-xs text-gray-500 mb-1">Atendimento</p>
+                <a href="tel:+5548988428526" class="text-sm font-semibold text-[#1e3a5f] hover:text-[#7a5c3e] transition">(48) 98842-8526</a>
+            </div>
         </div>
     </header>
 
@@ -357,18 +411,25 @@
         var mnuBtn = document.getElementById('mnuBtn');
         var mnu = document.getElementById('mnu');
         var mnuIcon = document.getElementById('mnuIcon');
+        var mnuOverlay = document.getElementById('mnuOverlay');
         var mnuOpen = false;
-        mnuBtn.addEventListener('click', function() {
-            mnuOpen = !mnuOpen;
-            mnu.classList.toggle('open', mnuOpen);
-            mnuIcon.setAttribute('d', mnuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+        function setMnu(open) {
+            mnuOpen = open;
+            mnu.classList.toggle('open', open);
+            mnuOverlay.classList.toggle('open', open);
+            mnuOverlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+            mnuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            mnuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+            mnuIcon.setAttribute('d', open ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+        mnuBtn.addEventListener('click', function() { setMnu(!mnuOpen); });
+        mnuOverlay.addEventListener('click', function() { setMnu(false); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mnuOpen) setMnu(false);
         });
         mnu.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                mnuOpen = false;
-                mnu.classList.remove('open');
-                mnuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            });
+            link.addEventListener('click', function() { setMnu(false); });
         });
     </script>
 
